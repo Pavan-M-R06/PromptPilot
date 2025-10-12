@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+# Virtual environments
+venv/
+.env
+.env.*
+# Editor/temp
+.idea/
+.vscode/
+*.swp
+# Byte-compiled / optimized / DLL files
+*.egg-info/
+build/
+dist/
+
+# Frontend / Node artifacts (ignore the frontend build and dependencies)
+promptpilot-frontend/node_modules/
+promptpilot-frontend/dist/
+promptpilot-frontend/build/
+promptpilot-frontend/.turbo/
+promptpilot-frontend/.env
+promptpilot-frontend/.env.local
+promptpilot-frontend/package-lock.json
+promptpilot-frontend/yarn.lock
+
+# Common logs and debug files
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Coverage, cache and test artifacts
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage/
+
+# OS generated files
+.DS_Store
+Thumbs.db
