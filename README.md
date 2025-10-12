@@ -1,6 +1,6 @@
 # PromptPilot
 
-PromptPilot is an end-to-end prompt engineering toolkit that converts short, human-friendly requests into high-quality "master prompts" suitable for use with large language models. The project includes a React + Vite frontend and a FastAPI backend that integrates with Supabase for authentication and profile/credit management and with an LLM provider (Google Gemini in the current code) for generation.
+PromptPilot is an end-to-end prompt engineering toolkit that converts short, human-friendly requests into high-quality "master prompts" suitable for use with large language models. The project includes a React + Vite frontend and a FastAPI backend that integrates with Supabase for authentication and profile/credit management and with an LLM provider for generation.
 
 ## Key ideas
 - D-CARE: a small engineering pipeline that analyzes user intent and produces a persona-aware engineered prompt.
