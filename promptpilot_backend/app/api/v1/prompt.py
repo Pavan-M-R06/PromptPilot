@@ -30,6 +30,19 @@ def generate_master_prompt(request: PromptRequest, current_user_profile: list = 
     # --- LLM CALL ---
     final_prompt = generate_with_fallback(dcare_output=engineered_prompt, api_key=api_key_to_use)
 
+    # If the user requested JSON output, try to parse the returned text as JSON
+    # and extract the `master_prompt` key if present. This accommodates LLMs
+    # that return a JSON object like {"master_prompt": "..."}.
+    if request.mode == "json" and final_prompt is not None:
+        try:
+            import json as _json
+            parsed = _json.loads(final_prompt)
+            if isinstance(parsed, dict) and 'master_prompt' in parsed:
+                final_prompt = parsed['master_prompt']
+        except Exception:
+            # If parsing fails, leave final_prompt as-is (could already be the master prompt)
+            pass
+
     # --- OFFLINE FALLBACK LOGIC ---
     if final_prompt is None:
         final_prompt = dcare_engine._generate_offline_prompt(request, persona)

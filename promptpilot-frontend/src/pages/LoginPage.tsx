@@ -36,14 +36,27 @@ export function LoginPage() {
   };
 
   return (
-    <Paper withBorder shadow="md" p={30} radius="md" maw={400} mx="auto">
-      <Title ta="center" order={2} mb="xs">
-        Welcome Back
-      </Title>
-      <Text ta="center" c="dimmed" mb="xl">
-        Don't have an account? <Link to="/signup">Sign up</Link>
-      </Text>
-      <AuthForm onSubmit={handleLogin} submitText="Login" isLoading={isLoading} />
-    </Paper>
+    <div style={{
+      minHeight: 'calc(100vh - 60px)',
+      background: 'linear-gradient(135deg, #1a1b3a 0%, #2d1b69 25%, #3d2d7c 50%, #4a357c 75%, #5d4e75 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '2rem'
+    }}>
+      <Paper withBorder shadow="xl" p={40} radius="lg" maw={450} mx="auto" style={{
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)'
+      }}>
+        <Title ta="center" order={2} mb="xs" style={{ color: 'white' }}>
+          Welcome Back
+        </Title>
+        <Text ta="center" c="dimmed" mb="xl" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+          Don't have an account? <Link to="/signup" style={{ color: '#4a9eff' }}>Sign up</Link>
+        </Text>
+        <AuthForm onSubmit={handleLogin} submitText="Login" isLoading={isLoading} />
+      </Paper>
+    </div>
   );
 }

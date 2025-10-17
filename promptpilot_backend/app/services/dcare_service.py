@@ -53,24 +53,20 @@ class DCARE_Engine:
         This method remains the same, but now it uses a dynamic persona.
         """
         if request.mode == "sniper":
-            return (
-                "Your one and only task is to act as an expert prompt engineer. "
-                f"Based on the user's simple request, you must generate a single, comprehensive, and detailed master prompt that will be used in another LLM. "
-                f"The master prompt you generate must adopt the persona of '{persona}'. "
-                "The generated prompt should be a dense, single paragraph designed to get the best possible response. "
-                "Do not answer the user's request. Only generate the master prompt itself, with no extra text or explanation before or after it. "
-                f"The user's original request is: '{request.user_prompt}'"
-            )
+            return f"""
+Your one and only task is to act as an expert prompt engineer. Based on the user's simple request, you must generate a single, comprehensive, and detailed master prompt that will be used in another LLM, that will significantly increase that LLM performance closer to 100%, and that will trigger and force that LLM to give best out of the best and accurate results for the users . The master prompt you generate must adopt the persona of '{persona}'. The generated prompt should be a dense, single paragraph designed to get the best possible response. Do not answer the user's request. Only generate the master prompt itself, with no extra text or explanation before or after it. The user's original request is: '{request.user_prompt}'
+"""
         elif request.mode == "titan":
-            return (
-                "Your one and only task is to act as an expert prompt engineer. "
-                "Based on the user's simple request, you must generate a structured and detailed master prompt that will be used in another LLM. "
-                "The generated master prompt must be clearly structured with headings (using '### HEADING ###' format). "
-                f"The core of the master prompt you generate must instruct the AI to adopt the persona of '{persona}' and fulfill the user's request: '{request.user_prompt}'. "
-                "Do not answer the user's request. Only generate the complete, structured master prompt itself, with no extra text or explanation before or after it."
-                 f"The user's original request is: '{request.user_prompt}'"
-            )
-        
+            return f"""
+Your one and only task is to act as an expert prompt engineer. Based on the user's simple request, you must generate a structured and detailed master prompt that will be used in another LLM that will significantly increase that LLM performance closer to 100%, and that will trigger and force that LLM to give best out of the best and accurate results for the users . The generated master prompt must be clearly structured with headings (using '### HEADING ###' format). The core of the master prompt you generate must instruct the AI to adopt the persona of '{persona}' and fulfill the user's request: '{request.user_prompt}'. Do not answer the user's request. Only generate the complete, structured master prompt itself, with no extra text or explanation before or after it. The user's original request is: '{request.user_prompt}'
+"""
+        elif request.mode == "json":
+            # In json mode we ask the prompt engineer to produce a JSON object
+            # with a single key `master_prompt` containing the master prompt string.
+            # The model must output ONLY valid JSON.
+            return f"""
+Your one and only task is to act as an expert prompt engineer. Based on the user's simple request, you must generate a single, high-quality master prompt that will significantly increase that LLM performance closer to 100%, and also will trigger and force that LLM to give best out of the best and accurate results for the users and return it wrapped in a JSON object with the key 'master_prompt'. The value of 'master_prompt' must be a string containing the master prompt itself. Output ONLY valid JSON and no other text or formatting. The master prompt should adopt the persona of '{persona}' and fulfill the user's request: '{request.user_prompt}'.
+"""
         
         
     def _generate_offline_prompt(self, request: PromptRequest, persona: str) -> str:
@@ -84,13 +80,25 @@ class DCARE_Engine:
                 f"Analyze the request carefully and provide a direct, complete, and high-quality answer without any introductory fluff. "
                 f"User Request: '{request.user_prompt}'"
             )
-        else: # Titan mode
+        if request.mode == "titan":
             return (
                 f"### ROLE ###\nAs an expert {persona}\n\n"
                 f"### OBJECTIVE ###\nYour objective is to generate a well-structured, comprehensive, and accurate response based on the user's request below.\n\n"
                 f"### USER REQUEST ###\n{request.user_prompt}\n\n"
                 f"### REQUIREMENTS ###\n- Analyze the user request and provide a detailed response.\n- Structure your answer logically and ensure it is easy to understand.\n- Fulfill the request completely, adhering to the assigned role."
             )
+        if request.mode == "json":
+            # Provide a deterministic JSON-encoded master_prompt as a fallback
+            fallback_obj = {
+                "master_prompt": f"As an expert {persona}, provide a concise and high-quality master prompt for the user's request: {request.user_prompt}"
+            }
+            return json.dumps(fallback_obj)
+        # default fallback (if an unknown mode is provided)
+        return (
+            f"As an expert {persona}, your primary goal is to provide a comprehensive and detailed response to the following user request. "
+            f"Analyze the request carefully and provide a direct, complete, and high-quality answer without any introductory fluff. "
+            f"User Request: '{request.user_prompt}'"
+        )
 
     def process(self, request: PromptRequest) -> dict:
         """

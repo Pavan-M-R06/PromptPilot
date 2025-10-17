@@ -41,14 +41,31 @@ export function AuthForm({ onSubmit, submitText, isLoading }: AuthFormProps) {
             placeholder="Your username"
             mb="md"
             {...form.getInputProps('username')}
+            styles={{
+              label: { color: 'white' },
+              input: { 
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderColor: 'rgba(255, 255, 255, 0.2)',
+                color: 'white',
+                '&::placeholder': { color: 'rgba(255, 255, 255, 0.5)' }
+              }
+            }}
           />
         )}
         <TextInput
           withAsterisk
-          // --- UPDATED LABEL ---
           label={submitText === 'Login' ? 'Email or Username' : 'Email'}
           placeholder="your@email.com"
           {...form.getInputProps('email')}
+          styles={{
+            label: { color: 'white' },
+            input: { 
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              borderColor: 'rgba(255, 255, 255, 0.2)',
+              color: 'white',
+              '&::placeholder': { color: 'rgba(255, 255, 255, 0.5)' }
+            }
+          }}
         />
         <PasswordInput
           withAsterisk
@@ -56,9 +73,27 @@ export function AuthForm({ onSubmit, submitText, isLoading }: AuthFormProps) {
           placeholder="Your password"
           mt="md"
           {...form.getInputProps('password')}
+          styles={{
+            label: { color: 'white' },
+            input: { 
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              borderColor: 'rgba(255, 255, 255, 0.2)',
+              color: 'white',
+              '&::placeholder': { color: 'rgba(255, 255, 255, 0.5)' }
+            }
+          }}
         />
         <Group justify="flex-end" mt="md">
-          <Button type="submit" loading={isLoading}>{submitText}</Button>
+          <Button 
+            type="submit" 
+            loading={isLoading}
+            style={{
+              background: 'linear-gradient(135deg, #4a9eff 0%, #1e6fff 100%)',
+              border: 'none'
+            }}
+          >
+            {submitText}
+          </Button>
         </Group>
       </form>
     </Box>
