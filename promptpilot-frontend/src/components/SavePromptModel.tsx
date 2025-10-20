@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Modal, TextInput, Select, Button, Group, Stack } from '@mantine/core';
 import axios from 'axios';
-import { savePromptToLibrary, getCategories } from '../utils/promptLibrary';
+import { savePromptToLibrary, getCategories } from '../utils/PromptLibrary';
 
 interface SavePromptModalProps {
   opened: boolean;

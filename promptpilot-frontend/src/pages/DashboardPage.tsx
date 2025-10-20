@@ -4,10 +4,10 @@ import { Title, Text, Button, Textarea, Select, Loader, Group, Box, Card, Avatar
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ProfileDropdown } from '../components/ProfileDropdown';
-//import { DashboardSidebar } from '../components/DashboardSidebar';
+import { DashboardSidebar } from '../components/DashboardSidebar';
 import { setPromptLibrary, getAllPrompts } from '../utils/PromptLibrary';
 import { SavePromptModal } from '../components/SavePromptModel';
-//import { SavedPrompt } from '../utils/PromptLibrary';
+// import { SavedPrompt } from '../utils/promptLibrary';
 
 interface UserProfile {
   id: string;
